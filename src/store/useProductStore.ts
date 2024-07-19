@@ -1,4 +1,3 @@
-// src/store/useProductStore.ts
 import { create } from "zustand";
 import axios from "axios";
 
@@ -37,11 +36,16 @@ export interface CartItem {
 
 interface ProductStore {
   products: Product[];
+  filteredProducts: Product[];
+  searchQuery: string;
   cart: CartItem[];
   productDetails: Product | null;
   loading: boolean;
   error: string | null;
   fetchProducts: () => Promise<void>;
+  setSearchQuery: (query: string) => void;
+  applySearch: () => void;
+  clearSearchQuery: () => void;
   getProductDetails: (productId: string) => Product | undefined;
   addToCart: (product: Product, size: string) => void;
   removeFromCart: (productId: string, size: string) => void;
@@ -54,6 +58,8 @@ interface ProductStore {
 
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
+  filteredProducts: [],
+  searchQuery: "",
   cart: [],
   productDetails: null,
   loading: false,
@@ -69,11 +75,30 @@ export const useProductStore = create<ProductStore>((set, get) => ({
         });
       } else {
         const response = await axios.get(process.env.EXPO_PUBLIC_API_URL);
-        set({ products: response.data.data, loading: false });
+        set({
+          products: response.data.data,
+          filteredProducts: response.data.data,
+          loading: false,
+        });
       }
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
+  },
+  setSearchQuery: (query: string) => set({ searchQuery: query }),
+  applySearch: () => {
+    const { products, searchQuery } = get();
+    set({
+      filteredProducts: searchQuery
+        ? products.filter((product) =>
+            product.name.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        : products,
+    });
+    console.log(searchQuery);
+  },
+  clearSearchQuery: () => {
+    set({ searchQuery: "", filteredProducts: get().products });
   },
   getProductDetails: (productId: string) => {
     const { products } = get();

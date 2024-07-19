@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 10.2.1"
+  },
+  "build": {
+    "development": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/products.json"
+      },
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/products.json"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/products.json"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

@@ -8,7 +8,7 @@ interface ScreenWrapperProps {
 
 const ScreenWrapper: React.FC<ScreenWrapperProps> = ({ children }) => {
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-dark">
       <StatusBar style="light" />
       {children}
     </View>

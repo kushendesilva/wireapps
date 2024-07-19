@@ -10,7 +10,7 @@
 
 <h3 align="left">How to Debug</h3>
 
-- create .env file in the root folder with EXPO_PUBLIC_API_URL (Use the provided api link in the test as the value).
+- ~~create .env file in the root folder with EXPO_PUBLIC_API_URL.~~
 - run following commands in the terminal.
 
 ```

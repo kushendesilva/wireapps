@@ -6,7 +6,7 @@ import {
   ProductDetailsScreen,
   ShoppingCartScreen,
 } from "../screens";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { IconButton } from "../components";
 
 export type RootStackParamList = {
   ProductList: undefined;
@@ -36,19 +36,19 @@ export const AppNavigator: React.FC = () => {
           options={({ navigation }) => ({
             title: "Products",
             headerRight: () => (
-              <Ionicons
-                name="cart"
-                size={32}
-                color="white"
-                onPress={() => navigation.navigate("ShoppingCart")}
-              />
+              <IconButton onPress={() => navigation.navigate("ShoppingCart")} />
             ),
           })}
         />
         <Stack.Screen
           name="ProductDetails"
           component={ProductDetailsScreen}
-          options={({ route }) => ({ title: route.params.name })}
+          options={({ route, navigation }) => ({
+            title: route.params.name,
+            headerRight: () => (
+              <IconButton onPress={() => navigation.navigate("ShoppingCart")} />
+            ),
+          })}
         />
         <Stack.Screen
           name="ShoppingCart"

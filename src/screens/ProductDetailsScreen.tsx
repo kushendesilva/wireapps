@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, Button } from "react-native";
+import { Text } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { useProductStore, Product } from "../store";
@@ -55,10 +55,6 @@ const ProductDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
         updateCartItemQuantity={(productId, quantity) =>
           updateCartItemQuantity(productId, selectedSize || "", quantity)
         }
-      />
-      <Button
-        title="Go to Cart"
-        onPress={() => navigation.navigate("ShoppingCart")}
       />
     </ScreenWrapper>
   );
