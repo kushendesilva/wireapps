@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, FlatList, Button, Image } from "react-native";
 import { useProductStore } from "../store/useProductStore";
+import { en } from "../locales";
 
 const ShoppingCartScreen: React.FC = () => {
   const { cart, removeFromCart } = useProductStore();
@@ -20,7 +21,7 @@ const ShoppingCartScreen: React.FC = () => {
             {item.price.amount} {item.price.currency}
           </Text>
           <Button
-            title="Remove from Cart"
+            title={en.remove + en.cart}
             onPress={() => removeFromCart(item.id)}
           />
         </View>

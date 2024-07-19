@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import { en } from "../locales";
 
 interface Price {
   amount: string;
@@ -43,7 +44,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       if (!process.env.EXPO_PUBLIC_API_URL) {
         set({
           loading: false,
-          error: "env not configured properly. Define EXPO_PUBLIC_API_URL",
+          error: en.envError,
         });
       } else {
         const response = await axios.get(process.env.EXPO_PUBLIC_API_URL);

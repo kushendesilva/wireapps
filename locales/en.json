@@ -1,0 +1,13 @@
+{
+  "envError": "env not configured properly. Define EXPO_PUBLIC_API_URL (Refer README.md & .env.example)",
+  "product": "Product",
+  "notFound": " Not Found",
+  "remove": "Remove from ",
+  "cart": "Cart",
+  "add": "Add to ",
+  "go": "Go to",
+  "sizes": "Available sizes:",
+  "loading": "Loading...",
+  "error": "Error:",
+  "view": "View Details"
+}

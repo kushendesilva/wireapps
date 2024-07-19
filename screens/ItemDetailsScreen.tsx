@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { useProductStore } from "../store/useProductStore";
 import { Product } from "../store/useProductStore";
+import { en } from "../locales";
 
 type RootStackParamList = {
   ItemDetails: { productId: string };
@@ -31,7 +32,7 @@ const ItemDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
     setProductDetails(product || null);
   }, [productId]);
 
-  if (!productDetails) return <Text>Product not found</Text>;
+  if (!productDetails) return <Text>{en.product + en.notFound}</Text>;
 
   return (
     <View>
@@ -47,13 +48,15 @@ const ItemDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
       <Text>{productDetails.description}</Text>
       <Text>{productDetails.stockStatus}</Text>
       <Text>{productDetails.colour}</Text>
-      <Text>Available sizes: {productDetails.sizes.join(", ")}</Text>
+      <Text>
+        {en.sizes} {productDetails.sizes.join(", ")}
+      </Text>
       <Button
-        title="Add to Cart"
+        title={en.add + en.cart}
         onPress={() => useProductStore.getState().addToCart(productDetails)}
       />
       <Button
-        title="Go to Cart"
+        title={en.go + en.cart}
         onPress={() => navigation.navigate("ShoppingCart")}
       />
     </View>

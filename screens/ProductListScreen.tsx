@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, FlatList, Button, Image } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useProductStore } from "../store/useProductStore";
+import { en } from "../locales";
 
 type RootStackParamList = {
   ProductList: undefined;
@@ -25,8 +26,13 @@ const ProductListScreen: React.FC<Props> = ({ navigation }) => {
     fetchProducts();
   }, []);
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error: {error}</Text>;
+  if (loading) return <Text>{en.loading}</Text>;
+  if (error)
+    return (
+      <Text>
+        {en.error} {error}
+      </Text>
+    );
 
   return (
     <FlatList
@@ -44,13 +50,13 @@ const ProductListScreen: React.FC<Props> = ({ navigation }) => {
             {item.price.amount} {item.price.currency}
           </Text>
           <Button
-            title="View Details"
+            title={en.view}
             onPress={() =>
               navigation.navigate("ItemDetails", { productId: item.id })
             }
           />
           <Button
-            title="Add to Cart"
+            title={en.add + en.cart}
             onPress={() => useProductStore.getState().addToCart(item)}
           />
         </View>
