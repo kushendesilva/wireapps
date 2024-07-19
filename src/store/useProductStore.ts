@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { en } from "../locales";
 
 interface Price {
   amount: string;
@@ -20,16 +19,22 @@ export interface Product {
   description: string;
 }
 
+interface CartItem extends Product {
+  quantity: number;
+  selectedSize: string;
+}
+
 interface ProductStore {
   products: Product[];
-  cart: Product[];
+  cart: CartItem[];
   productDetails: Product | null;
   loading: boolean;
   error: string | null;
   fetchProducts: () => Promise<void>;
   getProductDetails: (productId: string) => Product | undefined;
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, size: string) => void;
   removeFromCart: (productId: string) => void;
+  updateCartItemQuantity: (productId: string, quantity: number) => void;
 }
 
 export const useProductStore = create<ProductStore>((set, get) => ({
@@ -44,7 +49,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       if (!process.env.EXPO_PUBLIC_API_URL) {
         set({
           loading: false,
-          error: en.envError,
+          error: "en.envError",
         });
       } else {
         const response = await axios.get(process.env.EXPO_PUBLIC_API_URL);
@@ -58,10 +63,43 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     const { products } = get();
     return products.find((product) => product.id === productId);
   },
-  addToCart: (product: Product) =>
-    set((state) => ({ cart: [...state.cart, product] })),
-  removeFromCart: (productId: string) =>
-    set((state) => ({
-      cart: state.cart.filter((item) => item.id !== productId),
-    })),
+  addToCart: (product: Product, size: string) => {
+    const { cart } = get();
+    const existingItem = cart.find(
+      (item) => item.id === product.id && item.selectedSize === size
+    );
+    if (existingItem) {
+      set({
+        cart: cart.map((item) =>
+          item.id === product.id && item.selectedSize === size
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        ),
+      });
+    } else {
+      set({
+        cart: [...cart, { ...product, quantity: 1, selectedSize: size }],
+      });
+    }
+  },
+  removeFromCart: (productId: string) => {
+    const { cart } = get();
+    set({
+      cart: cart.filter((item) => item.id !== productId),
+    });
+  },
+  updateCartItemQuantity: (productId: string, quantity: number) => {
+    const { cart } = get();
+    if (quantity === 0) {
+      set({
+        cart: cart.filter((item) => item.id !== productId),
+      });
+    } else {
+      set({
+        cart: cart.map((item) =>
+          item.id === productId ? { ...item, quantity } : item
+        ),
+      });
+    }
+  },
 }));
