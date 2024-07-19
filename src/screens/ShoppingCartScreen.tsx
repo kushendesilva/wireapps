@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { useProductStore } from "../store";
 import { ScreenWrapper, CartItemCard, EmptyListCard } from "../components";
 
@@ -12,11 +12,13 @@ const ShoppingCartScreen: React.FC = () => {
         data={cart}
         keyExtractor={(item) => item.id + item.selectedSize}
         renderItem={({ item }) => (
-          <CartItemCard
-            item={item}
-            updateCartItemQuantity={updateCartItemQuantity}
-            removeFromCart={removeFromCart}
-          />
+          <View className="mx-2 my-1">
+            <CartItemCard
+              item={item}
+              updateCartItemQuantity={updateCartItemQuantity}
+              removeFromCart={removeFromCart}
+            />
+          </View>
         )}
         ListEmptyComponent={() => <EmptyListCard list="Shopping Cart" />}
       />

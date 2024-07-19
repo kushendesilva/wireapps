@@ -22,8 +22,13 @@ interface Props {
 
 const ProductDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
   const { productId } = route.params;
-  const { getProductDetails, cart, addToCart, updateCartItemQuantity } =
-    useProductStore();
+  const {
+    getProductDetails,
+    cart,
+    addToCart,
+    removeFromCart,
+    updateCartItemQuantity,
+  } = useProductStore();
   const [productDetails, setProductDetails] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
@@ -51,6 +56,8 @@ const ProductDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
         selectedSize={selectedSize}
         setSelectedSize={setSelectedSize}
         addToCart={(product, size) => addToCart(product, size)}
+        removeFromCart={removeFromCart}
+        viewCart={() => navigation.navigate("ShoppingCart")}
         cartItem={cartItem}
         updateCartItemQuantity={(productId, quantity) =>
           updateCartItemQuantity(productId, selectedSize || "", quantity)

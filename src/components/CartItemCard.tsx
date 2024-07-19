@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, Button, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import { CartItem } from "../store";
+import IconButton from "./IconButton";
 
 interface CartItemCardProps {
   item: CartItem;
@@ -18,41 +19,57 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
   removeFromCart,
 }) => {
   return (
-    <View className="p-4 border-b border-gray-200">
-      <Image source={{ uri: item.mainImage }} className="w-24 h-24" />
-      <Text className="text-lg font-semibold">{item.name}</Text>
-      <Text className="text-sm text-gray-600">
-        {item.price.amount} {item.price.currency}
-      </Text>
-      <Text className="text-sm text-gray-600">Size: {item.selectedSize}</Text>
-      <View className="flex-row items-center mt-2">
-        <Button
-          title="-"
-          onPress={() =>
-            updateCartItemQuantity(
-              item.id,
-              item.selectedSize,
-              item.quantity - 1
-            )
-          }
-        />
-        <Text className="mx-4">{item.quantity}</Text>
-        <Button
-          title="+"
-          onPress={() =>
-            updateCartItemQuantity(
-              item.id,
-              item.selectedSize,
-              item.quantity + 1
-            )
-          }
-        />
-        <Button
-          title="Remove"
-          onPress={() => removeFromCart(item.id, item.selectedSize)}
-          color="red"
-        />
+    <View className="p-2 bg-white rounded-xl">
+      <View className="flex-row justify-evenly">
+        <Image source={{ uri: item.mainImage }} className="w-24 h-24" />
+        <View className="justify-evenly">
+          <View className="flex-row justify-evenly">
+            <Text className="text-base text-gray-600 font-semibold">
+              {item.price.currency === "GBP" ? "£" : item.price.currency}{" "}
+              {item.price.amount}
+            </Text>
+            <Text className="text-base text-gray-600">
+              Size:
+              <Text className="text-base font-semibold text-gray-600">
+                {item.selectedSize}
+              </Text>
+            </Text>
+          </View>
+          <View className="flex-row items-center mt-2">
+            <View className="flex-row items-center border-black border rounded-full">
+              <IconButton
+                name="remove"
+                tw="bg-black"
+                onPress={() =>
+                  updateCartItemQuantity(
+                    item.id,
+                    item.selectedSize,
+                    item.quantity - 1
+                  )
+                }
+              />
+              <Text className="mx-4 text-lg">{item.quantity}</Text>
+              <IconButton
+                name="add"
+                tw="bg-black"
+                onPress={() =>
+                  updateCartItemQuantity(
+                    item.id,
+                    item.selectedSize,
+                    item.quantity + 1
+                  )
+                }
+              />
+            </View>
+            <IconButton
+              name="trash-bin"
+              tw="bg-red-700 ml-2"
+              onPress={() => removeFromCart(item.id, item.selectedSize)}
+            />
+          </View>
+        </View>
       </View>
+      <Text className="text-lg font-semibold text-center">{item.name}</Text>
     </View>
   );
 };

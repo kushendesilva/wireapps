@@ -19,10 +19,10 @@ const IconButton: React.FC<IconButtonProps> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`w-10 h-10 rounded-full justify-center items-center ${tw}`}
+      className={`w-8 h-8 rounded-full justify-center items-center ${tw}`}
       {...props}
     >
-      <Ionicons name={name} size={24} color={color} />
+      <Ionicons name={name} size={18} color={color} />
     </TouchableOpacity>
   );
 };

@@ -27,7 +27,6 @@ const ProductListScreen: React.FC<Props> = () => {
     loading,
     error,
     setSearchQuery,
-    applySearch,
     clearSearchQuery,
   } = useProductStore();
 
@@ -55,21 +54,13 @@ const ProductListScreen: React.FC<Props> = () => {
             onPress={clearSearchQuery}
           />
         )}
-        <IconButton
-          name="search"
-          color="black"
-          tw="bg-white"
-          onPress={applySearch}
-        />
       </View>
       <FlatList
         renderItem={({ item }) => (
-          <View className="h-32 w-full m-2">
+          <View className="h-28 w-full m-2">
             <ProductCard product={item} />
           </View>
         )}
-        // columnWrapperStyle={{ justifyContent: "space-between" }}
-        // numColumns={2}
         data={filteredProducts}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => <EmptyListCard list="Products" multiple />}

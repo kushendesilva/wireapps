@@ -43,11 +43,8 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="ProductDetails"
           component={ProductDetailsScreen}
-          options={({ route, navigation }) => ({
+          options={({ route }) => ({
             title: route.params.name,
-            headerRight: () => (
-              <IconButton onPress={() => navigation.navigate("ShoppingCart")} />
-            ),
           })}
         />
         <Stack.Screen

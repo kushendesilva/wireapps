@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <TouchableOpacity
-      className="p-4 bg-white rounded-2xl shadow-md h-32 w-full flex-[1] overflow-hidden"
+      className="px-4 bg-white rounded-2xl shadow-md w-full flex-[1] overflow-hidden"
       onPress={() =>
         navigation.navigate("ProductDetails", {
           productId: product.id,
@@ -57,7 +57,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.brandName ? product.brandName : "Unbranded"}
           </Text>
           <Text className="text-md font-semibold mb-2">
-            {product.price.amount} {product.price.currency}
+            {product.price.currency === "GBP" ? "£" : product.price.currency}{" "}
+            {product.price.amount}
           </Text>
         </View>
       </View>

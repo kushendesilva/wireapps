@@ -1,15 +1,17 @@
 import React from "react";
-import { View, Button, Text } from "react-native";
-import ProductImage from "./ProductImage";
+import { View } from "react-native";
 import ProductInfo from "./ProductInfo";
 import SizePicker from "./SizePicker";
 import { Product } from "../store";
+import AppButton from "./AppButton";
 
 interface DetailsCardProps {
   product: Product;
   selectedSize: string | null;
   setSelectedSize: (size: string | null) => void;
   addToCart: (product: Product, size: string) => void;
+  removeFromCart: (productId: string, size: string) => void;
+  viewCart: () => void;
   cartItem: { quantity: number } | undefined;
   updateCartItemQuantity: (productId: string, quantity: number) => void;
 }
@@ -19,39 +21,48 @@ const DetailsCard: React.FC<DetailsCardProps> = ({
   selectedSize,
   setSelectedSize,
   addToCart,
+  removeFromCart,
+  viewCart,
   cartItem,
-  updateCartItemQuantity,
 }) => {
   return (
     <View className="p-4">
-      <ProductImage uri={product.mainImage} />
       <ProductInfo product={product} />
       <SizePicker
+        enabled={product.stockStatus === "OUT OF STOCK" ? false : true}
         sizes={product.sizes}
         selectedSize={selectedSize}
         onValueChange={setSelectedSize}
       />
       {cartItem ? (
-        <View className="flex flex-row items-center">
-          <Button
-            title="-"
-            onPress={() =>
-              updateCartItemQuantity(product.id, cartItem.quantity - 1)
-            }
+        <View className="items-center">
+          <AppButton
+            style="bg-black"
+            text="View Cart"
+            textStyle="text-white"
+            onPress={viewCart}
           />
-          <Text className="mx-2">{cartItem.quantity}</Text>
-          <Button
-            title="+"
-            onPress={() =>
-              updateCartItemQuantity(product.id, cartItem.quantity + 1)
-            }
+          <AppButton
+            style="bg-red-700"
+            text="Remove from Cart"
+            textStyle="text-white"
+            onPress={() => removeFromCart(product.id, selectedSize as string)}
           />
         </View>
       ) : (
-        <Button
-          title="Add to Cart"
-          onPress={() => selectedSize && addToCart(product, selectedSize)}
-        />
+        <View className="items-center">
+          <AppButton
+            disabled={product.stockStatus === "OUT OF STOCK" ? true : false}
+            style={
+              product.stockStatus === "OUT OF STOCK"
+                ? "bg-gray-400"
+                : "bg-black"
+            }
+            text="Add to Cart"
+            textStyle="text-white"
+            onPress={() => selectedSize && addToCart(product, selectedSize)}
+          />
+        </View>
       )}
     </View>
   );

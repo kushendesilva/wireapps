@@ -7,7 +7,6 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://s3-eu-west-1.amazonaws.com/api.themeshplatform.com/products.json"
       },
-      "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {

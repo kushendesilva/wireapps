@@ -44,7 +44,6 @@ interface ProductStore {
   error: string | null;
   fetchProducts: () => Promise<void>;
   setSearchQuery: (query: string) => void;
-  applySearch: () => void;
   clearSearchQuery: () => void;
   getProductDetails: (productId: string) => Product | undefined;
   addToCart: (product: Product, size: string) => void;
@@ -85,17 +84,16 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       set({ error: error.message, loading: false });
     }
   },
-  setSearchQuery: (query: string) => set({ searchQuery: query }),
-  applySearch: () => {
-    const { products, searchQuery } = get();
+  setSearchQuery: (query: string) => {
+    const { products } = get();
     set({
-      filteredProducts: searchQuery
+      searchQuery: query,
+      filteredProducts: query
         ? products.filter((product) =>
-            product.name.toLowerCase().includes(searchQuery.toLowerCase())
+            product.name.toLowerCase().includes(query.toLowerCase())
           )
         : products,
     });
-    console.log(searchQuery);
   },
   clearSearchQuery: () => {
     set({ searchQuery: "", filteredProducts: get().products });
