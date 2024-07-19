@@ -1,3 +1,4 @@
+// src/store/useProductStore.ts
 import { create } from "zustand";
 import axios from "axios";
 
@@ -19,7 +20,17 @@ export interface Product {
   description: string;
 }
 
-interface CartItem extends Product {
+export interface CartItem {
+  id: string;
+  SKU: string;
+  name: string;
+  brandName: string;
+  mainImage: string;
+  price: Price;
+  sizes: string[];
+  stockStatus: string;
+  colour: string;
+  description: string;
   quantity: number;
   selectedSize: string;
 }
@@ -33,8 +44,12 @@ interface ProductStore {
   fetchProducts: () => Promise<void>;
   getProductDetails: (productId: string) => Product | undefined;
   addToCart: (product: Product, size: string) => void;
-  removeFromCart: (productId: string) => void;
-  updateCartItemQuantity: (productId: string, quantity: number) => void;
+  removeFromCart: (productId: string, size: string) => void;
+  updateCartItemQuantity: (
+    productId: string,
+    size: string,
+    quantity: number
+  ) => void;
 }
 
 export const useProductStore = create<ProductStore>((set, get) => ({
@@ -49,7 +64,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       if (!process.env.EXPO_PUBLIC_API_URL) {
         set({
           loading: false,
-          error: "en.envError",
+          error:
+            "env not configured properly. Define EXPO_PUBLIC_API_URL (Refer README.md & .env.example)",
         });
       } else {
         const response = await axios.get(process.env.EXPO_PUBLIC_API_URL);
@@ -82,22 +98,32 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       });
     }
   },
-  removeFromCart: (productId: string) => {
+  removeFromCart: (productId: string, size: string) => {
     const { cart } = get();
     set({
-      cart: cart.filter((item) => item.id !== productId),
+      cart: cart.filter(
+        (item) => !(item.id === productId && item.selectedSize === size)
+      ),
     });
   },
-  updateCartItemQuantity: (productId: string, quantity: number) => {
+  updateCartItemQuantity: (
+    productId: string,
+    size: string,
+    quantity: number
+  ) => {
     const { cart } = get();
     if (quantity === 0) {
       set({
-        cart: cart.filter((item) => item.id !== productId),
+        cart: cart.filter(
+          (item) => !(item.id === productId && item.selectedSize === size)
+        ),
       });
     } else {
       set({
         cart: cart.map((item) =>
-          item.id === productId ? { ...item, quantity } : item
+          item.id === productId && item.selectedSize === size
+            ? { ...item, quantity }
+            : item
         ),
       });
     }

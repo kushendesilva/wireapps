@@ -3,7 +3,7 @@ import { View, Text, FlatList, Button, Image, TextInput } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useProductStore } from "../store";
 import { RootStackParamList } from "../navigation";
-import { StatusBar } from "expo-status-bar";
+import { ScreenWrapper, ProductCard } from "../components";
 
 type ProductListScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -35,8 +35,7 @@ const ProductListScreen: React.FC<Props> = ({ navigation }) => {
   if (error) return <Text>Error: {error}</Text>;
 
   return (
-    <View>
-      <StatusBar style="light" />
+    <ScreenWrapper>
       <TextInput
         placeholder="Search products..."
         value={searchQuery}
@@ -46,30 +45,9 @@ const ProductListScreen: React.FC<Props> = ({ navigation }) => {
       <FlatList
         data={filteredProducts}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View>
-            <Image
-              source={{ uri: item.mainImage }}
-              style={{ width: 100, height: 100 }}
-            />
-            <Text>{item.name}</Text>
-            <Text>{item.brandName}</Text>
-            <Text>
-              {item.price.amount} {item.price.currency}
-            </Text>
-            <Button
-              title="View Details"
-              onPress={() =>
-                navigation.navigate("ItemDetails", {
-                  productId: item.id,
-                  name: item.name,
-                })
-              }
-            />
-          </View>
-        )}
+        renderItem={({ item }) => <ProductCard product={item} />}
       />
-    </View>
+    </ScreenWrapper>
   );
 };
 

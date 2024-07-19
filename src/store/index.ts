@@ -1,2 +1,2 @@
-import { Product, useProductStore } from "./useProductStore";
-export { Product, useProductStore };
+import { Product, useProductStore, CartItem } from "./useProductStore";
+export { Product, useProductStore, CartItem };

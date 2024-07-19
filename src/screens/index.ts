@@ -1,4 +1,4 @@
 import ProductListScreen from "./ProductListScreen";
-import ItemDetailsScreen from "./ItemDetailsScreen";
+import ProductDetailsScreen from "./ProductDetailsScreen";
 import ShoppingCartScreen from "./ShoppingCartScreen";
-export { ProductListScreen, ItemDetailsScreen, ShoppingCartScreen };
+export { ProductListScreen, ProductDetailsScreen, ShoppingCartScreen };

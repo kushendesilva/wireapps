@@ -3,14 +3,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   ProductListScreen,
-  ItemDetailsScreen,
+  ProductDetailsScreen,
   ShoppingCartScreen,
 } from "../screens";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export type RootStackParamList = {
   ProductList: undefined;
-  ItemDetails: { productId: string; name: string };
+  ProductDetails: { productId: string; name: string };
   ShoppingCart: undefined;
 };
 
@@ -46,8 +46,8 @@ export const AppNavigator: React.FC = () => {
           })}
         />
         <Stack.Screen
-          name="ItemDetails"
-          component={ItemDetailsScreen}
+          name="ProductDetails"
+          component={ProductDetailsScreen}
           options={({ route }) => ({ title: route.params.name })}
         />
         <Stack.Screen
