@@ -41,8 +41,10 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     set({ loading: true, error: null });
     try {
       if (!process.env.EXPO_PUBLIC_API_URL) {
-        console.log("EXPO_PUBLIC_API_URL is not defined");
-        set({ loading: false, error: "EXPO_PUBLIC_API_URL is not defined" });
+        set({
+          loading: false,
+          error: "env not configured properly. Define EXPO_PUBLIC_API_URL",
+        });
       } else {
         const response = await axios.get(process.env.EXPO_PUBLIC_API_URL);
         set({ products: response.data.data, loading: false });
