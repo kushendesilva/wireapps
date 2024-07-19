@@ -1,18 +1,30 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {HomeScreen} from './screens';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  ProductListScreen,
+  ItemDetailsScreen,
+  ShoppingCartScreen,
+} from "./screens";
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  ProductList: undefined;
+  ItemDetails: { productId: string };
+  ShoppingCart: undefined;
+};
 
-function App() {
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ProductList" component={ProductListScreen} />
+        <Stack.Screen name="ItemDetails" component={ItemDetailsScreen} />
+        <Stack.Screen name="ShoppingCart" component={ShoppingCartScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default App;
