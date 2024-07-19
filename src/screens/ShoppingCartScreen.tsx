@@ -1,8 +1,7 @@
 import React from "react";
 import { FlatList } from "react-native";
 import { useProductStore } from "../store";
-import { ScreenWrapper } from "../components";
-import { CartItemCard } from "../components";
+import { ScreenWrapper, CartItemCard, EmptyListCard } from "../components";
 
 const ShoppingCartScreen: React.FC = () => {
   const { cart, updateCartItemQuantity, removeFromCart } = useProductStore();
@@ -19,6 +18,7 @@ const ShoppingCartScreen: React.FC = () => {
             removeFromCart={removeFromCart}
           />
         )}
+        ListEmptyComponent={() => <EmptyListCard list="Shopping Cart" />}
       />
     </ScreenWrapper>
   );

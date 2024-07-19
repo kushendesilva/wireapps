@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Button, Image, TextInput } from "react-native";
+import { Text, FlatList, TextInput } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useProductStore } from "../store";
 import { RootStackParamList } from "../navigation";
-import { ScreenWrapper, ProductCard } from "../components";
+import { ScreenWrapper, ProductCard, EmptyListCard } from "../components";
 
 type ProductListScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -46,6 +46,7 @@ const ProductListScreen: React.FC<Props> = ({ navigation }) => {
         data={filteredProducts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ProductCard product={item} />}
+        ListEmptyComponent={() => <EmptyListCard list="Products" multiple />}
       />
     </ScreenWrapper>
   );

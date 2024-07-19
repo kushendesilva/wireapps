@@ -1,5 +1,6 @@
 import React from "react";
-import { View, StatusBar } from "react-native";
+import { View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 interface ScreenWrapperProps {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ interface ScreenWrapperProps {
 const ScreenWrapper: React.FC<ScreenWrapperProps> = ({ children }) => {
   return (
     <View className="flex-1 bg-white">
-      <StatusBar barStyle="light-content" />
+      <StatusBar style="light" />
       {children}
     </View>
   );

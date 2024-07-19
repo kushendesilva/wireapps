@@ -4,8 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { useProductStore, Product } from "../store";
 import { RootStackParamList } from "../navigation";
-import ScreenWrapper from "../components/ScreenWrapper";
-import ProductDetails from "../components/ProductDetails";
+import { ScreenWrapper, DetailsCard } from "../components";
 
 type ProductDetailsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -23,13 +22,8 @@ interface Props {
 
 const ProductDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
   const { productId } = route.params;
-  const {
-    getProductDetails,
-    cart,
-    addToCart,
-    removeFromCart,
-    updateCartItemQuantity,
-  } = useProductStore();
+  const { getProductDetails, cart, addToCart, updateCartItemQuantity } =
+    useProductStore();
   const [productDetails, setProductDetails] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
@@ -52,7 +46,7 @@ const ProductDetailsScreen: React.FC<Props> = ({ route, navigation }) => {
 
   return (
     <ScreenWrapper>
-      <ProductDetails
+      <DetailsCard
         product={productDetails}
         selectedSize={selectedSize}
         setSelectedSize={setSelectedSize}

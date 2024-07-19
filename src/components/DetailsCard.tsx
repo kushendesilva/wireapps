@@ -5,7 +5,7 @@ import ProductInfo from "./ProductInfo";
 import SizePicker from "./SizePicker";
 import { Product } from "../store";
 
-interface ProductDetailsProps {
+interface DetailsCardProps {
   product: Product;
   selectedSize: string | null;
   setSelectedSize: (size: string | null) => void;
@@ -14,7 +14,7 @@ interface ProductDetailsProps {
   updateCartItemQuantity: (productId: string, quantity: number) => void;
 }
 
-const ProductDetails: React.FC<ProductDetailsProps> = ({
+const DetailsCard: React.FC<DetailsCardProps> = ({
   product,
   selectedSize,
   setSelectedSize,
@@ -57,4 +57,4 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   );
 };
 
-export default ProductDetails;
+export default DetailsCard;
